@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Ambassador Roadmap — AFUHSD</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #080e1a;
+  --surface: #111b2e;
+  --surface2: #162035;
+  --border: rgba(255,255,255,0.1);
+  --border2: rgba(255,255,255,0.18);
+  --text: #f0f2f8;
+  --muted: #8b94b0;
+  --dim: rgba(255,255,255,0.35);
+
+  --z1: #4a9fea;
+  --z2: #5bb8e8;
+  --z3: #a593f0;
+  --z4: #e8503e;
+  --z5: #ff6b35;
+
+  --cliff: #ff6b35;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  min-height: 100vh;
+  padding-bottom: 80px;
+}
+
+/* ── HEADER ── */
+.header {
+  padding: 52px 24px 40px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+.header::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(to right, var(--z1), var(--z3), var(--z5));
+}
+.header-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--z2);
+  margin-bottom: 16px;
+}
+.header-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3.5rem, 10vw, 7rem);
+  line-height: 0.9;
+  letter-spacing: 0.04em;
+  color: var(--text);
+  margin-bottom: 18px;
+}
+.header-title span {
+  display: block;
+  background: linear-gradient(135deg, #4a9fd4 0%, #e8eaf0 50%, var(--z5) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.header-sub {
+  font-size: 0.88rem;
+  color: var(--muted);
+  font-weight: 300;
+  max-width: 480px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+/* ── INSTRUCTION BAR ── */
+.instruction {
+  background: linear-gradient(to right, #0d1e3a, #1a0908);
+  padding: 10px 20px;
+  text-align: center;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.55);
+}
+.instruction span { color: rgba(255,255,255,0.85); }
+
+/* ── ROAD VISUAL ── */
+.road-wrap {
+  max-width: 900px;
+  margin: 40px auto 0;
+  padding: 0 24px;
+}
+.road-labels {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.road-track {
+  position: relative;
+  height: 14px;
+}
+.road-bar {
+  position: absolute;
+  left: 0; top: 0; right: 0; bottom: 0;
+  border-radius: 7px;
+  background: linear-gradient(to right, var(--z1), var(--z2), var(--z3), var(--z4), var(--z5));
+  opacity: 0.25;
+}
+.road-fill {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  border-radius: 7px;
+  background: linear-gradient(to right, var(--z1), var(--z2), var(--z3), var(--z4), var(--z5));
+  width: 0%;
+  transition: width 0.6s cubic-bezier(.4,0,.2,1);
+}
+.road-pins {
+  position: absolute;
+  top: -6px; left: 0; right: 0;
+  pointer-events: none;
+}
+.road-pin {
+  position: absolute;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+.road-pin-dot {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.55rem;
+  font-weight: 500;
+  background: var(--bg);
+  transition: all 0.3s;
+}
+.road-pin-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.48rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* ── CLIFF CALLOUT ── */
+.cliff-callout {
+  max-width: 900px;
+  margin: 32px auto 0;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.cliff-line {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+.cliff-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.57rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--cliff);
+  padding: 6px 14px;
+  border: 1px solid rgba(255, 107, 53, 0.3);
+  border-radius: 2px;
+  white-space: nowrap;
+}
+
+/* ── ZONES GRID ── */
+.zones {
+  max-width: 900px;
+  margin: 28px auto 0;
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* ── ZONE CARD ── */
+.zone {
+  border: 1px solid var(--border);
+  border-bottom: none;
+  background: var(--surface);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.2s;
+}
+.zone:first-child { border-radius: 6px 6px 0 0; }
+.zone:last-child { border-bottom: 1px solid var(--border); border-radius: 0 0 6px 6px; }
+
+.zone.is-current { background: var(--surface2); }
+.zone-stripe {
+  position: absolute;
+  left: 0; top: 0; bottom: 0; width: 4px;
+}
+
+/* cliff gap */
+.cliff-gap {
+  height: 0;
+  position: relative;
+  overflow: visible;
+  z-index: 10;
+}
+.cliff-gap-inner {
+  position: absolute;
+  left: 0; right: 0;
+  top: -1px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  border-left: 1px dashed rgba(255,107,53,0.4);
+  border-right: 1px dashed rgba(255,107,53,0.4);
+}
+.cliff-gap-text {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.52rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--cliff);
+  opacity: 0.8;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.cliff-gap-line {
+  flex: 1;
+  height: 1px;
+  background: rgba(255,107,53,0.25);
+}
+
+.zone-inner {
+  padding: 20px 22px 18px 28px;
+  cursor: pointer;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  user-select: none;
+}
+.zone-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.8rem;
+  line-height: 0.85;
+  width: 40px;
+  flex-shrink: 0;
+  text-align: center;
+  transition: opacity 0.2s;
+  opacity: 0.45;
+}
+.zone.is-current .zone-num { opacity: 0.85; }
+
+.zone-meta { flex: 1; }
+.zone-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  margin-bottom: 3px;
+}
+.zone-name {
+  font-size: 1.4rem;
+  font-weight: 800;
+  letter-spacing: 0.015em;
+  line-height: 1;
+}
+.zone-tag {
+  font-size: 0.78rem;
+  color: #9aa3bc;
+  font-style: italic;
+  margin-top: 5px;
+  line-height: 1.5;
+  max-width: 560px;
+}
+.zone-chevron {
+  color: var(--dim);
+  font-size: 0.65rem;
+  margin-top: 6px;
+  transition: transform 0.2s;
+  flex-shrink: 0;
+}
+.zone-chevron.open { transform: rotate(180deg); }
+
+/* badges */
+.zone-badges {
+  display: flex;
+  gap: 6px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+.badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.5rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 2px;
+  border: 1px solid;
+}
+.badge-now {
+  background: transparent;
+  color: var(--text);
+  border-color: rgba(255,255,255,0.3);
+}
+.badge-year {
+  background: transparent;
+  border-color: rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.5);
+}
+.badge-long {
+  background: transparent;
+  border-color: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.35);
+}
+
+/* expanded */
+.zone-expanded {
+  padding: 0 22px 0 28px;
+  display: none;
+}
+.zone-expanded.open { display: block; }
+
+.zone-check {
+  margin-bottom: 14px;
+  padding: 11px 14px;
+  background: rgba(255,255,255,0.05);
+  border-left: 2px solid;
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: rgba(230,235,248,0.9);
+  font-style: italic;
+}
+.zone-check-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.5rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 6px;
+  font-style: normal;
+}
+
+.zone-bullets-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.5rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+.zone-bullets {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 24px;
+  margin-bottom: 16px;
+}
+.zone-bullet {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  font-size: 0.78rem;
+  line-height: 1.55;
+  color: rgba(220,228,242,0.92);
+}
+.zone-bullet-arrow {
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.cliff-note {
+  margin: 0 0 16px;
+  padding: 12px 14px;
+  background: rgba(255,107,53,0.05);
+  border-left: 2px dashed rgba(255,107,53,0.35);
+  font-size: 0.74rem;
+  color: rgba(200,208,220,0.5);
+  font-style: italic;
+  line-height: 1.65;
+}
+
+/* zone actions */
+.zone-actions {
+  display: flex;
+  gap: 8px;
+  padding-bottom: 18px;
+  flex-wrap: wrap;
+}
+.zone-btn {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  padding: 8px 14px;
+  border-radius: 3px;
+  border: 1px solid;
+  cursor: pointer;
+  background: transparent;
+  transition: all 0.15s;
+}
+.zone-btn:hover { opacity: 0.8; }
+
+/* ── RESULTS PANEL ── */
+.results {
+  max-width: 900px;
+  margin: 16px auto 0;
+  padding: 0 24px;
+  display: none;
+}
+.results.visible { display: block; }
+.results-inner {
+  background: linear-gradient(145deg, #0a1828, #160808);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 6px;
+  padding: 28px 28px 24px;
+  position: relative;
+  overflow: hidden;
+}
+.results-inner::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(to right, var(--z1), var(--z5));
+}
+.results-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.2rem;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.results-sub {
+  font-size: 0.78rem;
+  color: var(--muted);
+  font-style: italic;
+  margin-bottom: 22px;
+}
+.results-pins {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.results-pin {
+  padding: 8px 16px;
+  border-radius: 3px;
+  font-weight: 700;
+  font-size: 0.84rem;
+}
+.results-arrow { font-size: 1.1rem; color: var(--dim); align-self: center; }
+.results-divider { height: 1px; background: rgba(255,255,255,0.06); margin-bottom: 18px; }
+.results-steps-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.5rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+.results-steps { display: flex; flex-direction: column; gap: 10px; }
+.results-step {
+  display: flex;
+  gap: 10px;
+  font-size: 0.83rem;
+  line-height: 1.6;
+  color: rgba(200,208,220,0.88);
+}
+.results-step-arrow { color: var(--z5); font-weight: 700; flex-shrink: 0; }
+.results-reset {
+  margin-top: 20px;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+  padding: 8px 16px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.results-reset:hover { border-color: rgba(255,255,255,0.25); color: rgba(255,255,255,0.5); }
+
+/* ── HORIZON ── */
+.horizon {
+  max-width: 900px;
+  margin: 16px auto 0;
+  padding: 0 24px;
+}
+.horizon-inner {
+  border: 1px dashed rgba(255,255,255,0.09);
+  background: linear-gradient(135deg, rgba(12,24,48,0.7), rgba(32,8,6,0.4));
+  border-radius: 6px;
+  padding: 24px 24px 20px;
+}
+.horizon-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.52rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--dim);
+  margin-bottom: 8px;
+}
+.horizon-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: rgba(255,255,255,0.3);
+  margin-bottom: 10px;
+}
+.horizon-body {
+  font-size: 0.77rem;
+  color: rgba(200,208,220,0.4);
+  font-style: italic;
+  line-height: 1.65;
+  max-width: 680px;
+  margin-bottom: 16px;
+}
+.horizon-pills { display: flex; flex-wrap: wrap; gap: 7px; }
+.horizon-pill {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.53rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 5px 11px;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.02);
+}
+
+@media (max-width: 600px) {
+  .zone-bullets { grid-template-columns: 1fr; }
+  .results-pins { gap: 6px; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <p class="header-eyebrow">Agua Fría Union High School District · AI Learning Initiative</p>
+  <h1 class="header-title"><span>EDUCATOR AI<br>ROADMAP</span></h1>
+  <p class="header-sub">Where are you today. Where do you want to be. What it actually takes to get there.</p>
+</div>
+
+<!-- INSTRUCTION BAR -->
+<div class="instruction">
+  <span>Mark where you are now</span> &nbsp;·&nbsp; 
+  <span>Set your one-year goal</span> &nbsp;·&nbsp; 
+  <span>Set your long-term target</span>
+</div>
+
+<!-- ROAD VISUAL -->
+<div class="road-wrap">
+  <div class="road-labels">
+    <span>Just Starting</span>
+    <span>Frontier Educator</span>
+    <span style="color: rgba(255,255,255,0.13); font-style: italic;">Beyond ···</span>
+  </div>
+  <div class="road-track">
+    <div class="road-bar"></div>
+    <div class="road-fill" id="road-fill"></div>
+    <div class="road-pins" id="road-pins"></div>
+  </div>
+  <div style="text-align:right; margin-top:5px; font-family:'DM Mono',monospace; font-size:0.5rem; color:rgba(255,255,255,0.15); font-style:italic;">∞ &nbsp;The horizon keeps moving</div>
+</div>
+
+<!-- CLIFF CALLOUT -->
+<div class="cliff-callout">
+  <div class="cliff-line"></div>
+  <div class="cliff-badge">⚠ Most ambassadors stop at Zone 3</div>
+  <div class="cliff-line"></div>
+</div>
+
+<!-- ZONES -->
+<div class="zones" id="zones-container"></div>
+
+<!-- RESULTS -->
+<div class="results" id="results"></div>
+
+<!-- HORIZON -->
+<div class="horizon">
+  <div class="horizon-inner">
+    <p class="horizon-eyebrow">Beyond the Scale · Still Being Written</p>
+    <h3 class="horizon-title">The Actual Frontier of AI Capability</h3>
+    <p class="horizon-body">These capabilities exist today in research labs, enterprise systems, and early pilots — but aren't yet part of any individual educator's daily workflow. This isn't a Zone 6. It's the horizon. The educators shaping Zone 5 are the ones who will determine how and whether these capabilities ever reach classrooms.</p>
+    <div class="horizon-pills">
+      <span class="horizon-pill">Autonomous multi-hour agents</span>
+      <span class="horizon-pill">Real-time adaptive curriculum</span>
+      <span class="horizon-pill">AI-generated personalized video instruction</span>
+      <span class="horizon-pill">Multi-agent AI collaboration</span>
+      <span class="horizon-pill">Full IEP lifecycle automation</span>
+      <span class="horizon-pill">Predictive student risk modeling</span>
+      <span class="horizon-pill">AI tutors indistinguishable from human</span>
+      <span class="horizon-pill">Computer-use agents operating software</span>
+      <span class="horizon-pill">Custom fine-tuned models on district data</span>
+    </div>
+  </div>
+</div>
+
+<script>
+const COLORS = ['#4a9fea','#5bb8e8','#a593f0','#e8503e','#ff6b35'];
+
+const zones = [
+  {
+    id: 1, color: COLORS[0],
+    label: 'Zone 1 · Entry',
+    name: 'Passenger',
+    tag: '"AI does things when I ask. I\'m along for the ride."',
+    check: 'Do you open ChatGPT or Claude when you think of it, get something useful, and then close it? Does it still feel like a search engine with better answers? If you didn\'t touch it for a week, would anyone notice?',
+    bullets: [
+      'Asked ChatGPT or Claude something out of curiosity',
+      'Used it for a personal task — a message, a search, a recipe',
+      'Tried it a few times but haven\'t built a habit',
+      'Still unsure how it fits into your classroom or role',
+      'Mostly hear about it from colleagues or the news',
+      'Don\'t really think about prompting — you just ask',
+    ],
+  },
+  {
+    id: 2, color: COLORS[1],
+    label: 'Zone 2 · Developing',
+    name: 'Operator',
+    tag: '"I use it regularly. It makes my existing work faster. I\'m still doing all the thinking."',
+    check: 'Is AI part of your weekly workflow? Do you reach for it proactively — not just when stuck? You\'re the one initiating, but you\'re doing all the design and decision-making. AI is a faster typewriter.',
+    bullets: [
+      'Run emails or communications through AI for tone or clarity',
+      'Use it to summarize long documents or policies',
+      'Brainstorm ideas when you\'re stuck',
+      'Generate quick rubrics or activity outlines',
+      'Write intentional prompts and get results you actually use',
+      'Save an hour or two per week because of it',
+      'Introduced AI to at least one colleague',
+      'AI helps you — but everything still starts with you opening a chat window',
+    ],
+  },
+  {
+    id: 3, color: COLORS[2],
+    label: 'Zone 3 · Surface',
+    name: 'Configurator',
+    tag: '"I built a Gem / custom GPT. It does exactly what I set it up to do — when I go use it."',
+    check: 'Have you customized AI with a system prompt, persona, or specific instructions? Built a Gem, GPT, or Claude Project? That\'s real progress — but ask yourself honestly: does it run without you? Does it require a human to open it, paste something in, and hit send every single time?',
+    bullets: [
+      'Built one or more Gems, GPTs, or Claude Projects',
+      'Customized AI with specific instructions for a subject or task',
+      'Others on your team use something you configured',
+      'Understand the difference between a good and bad prompt',
+      'Know how to give AI a persona, constraints, and context',
+      'Still requires a human to initiate every single interaction',
+      'Zero code written — configuration only',
+      'Could rebuild it in an afternoon if it disappeared',
+    ],
+    cliffNote: 'This is where most AI Ambassadors currently operate. Building a Gem is configuration, not construction. You\'ve customized how AI responds — you haven\'t built a system that runs.',
+  },
+  {
+    id: 4, color: COLORS[3],
+    label: 'Zone 4 · Real Build',
+    name: 'Builder',
+    tag: '"I wrote actual code. The system runs. Teachers get output without knowing AI was involved."',
+    check: 'Have you written code that connects to an AI API? Built something that triggers automatically — on a form submit, a schedule, a data event? Does it deliver value to someone who never opens a chat window? If you disappeared for a week, would your tool keep running?',
+    bullets: [
+      'Written Google Apps Script, Python, or similar to call an AI API',
+      'Built a tool that runs on a trigger — not a chat window',
+      'Teachers or students receive AI output without prompting it themselves',
+      'Your system handles authentication, data flow, and error states',
+      'Connected AI to real school systems — Google Workspace, forms, spreadsheets',
+      'Understand enough about APIs to debug when something breaks',
+      'Others depend on your system — it has real users',
+      'Crossed the line from saved prompt to working software',
+    ],
+    cliffNote: 'THIS is the cliff. The gap between Zone 3 and Zone 4 is the largest on this map. A Gem takes an afternoon. Getting here took months of actual work — learning APIs, writing code, debugging, architecting data flow. Most people never cross it.',
+  },
+  {
+    id: 5, color: COLORS[4],
+    label: 'Zone 5 · Frontier',
+    name: 'Architect',
+    tag: '"I design systems. AI triggers AI. Infrastructure others build on top of."',
+    check: 'Are you designing multi-step AI pipelines? Building systems where one AI output feeds another process automatically? Are you influencing what AI looks like in education at a structural level — policy, culture, what gets built next? Are you asking what AI should do in schools, not just what it can do for you?',
+    bullets: [
+      'Design multi-component AI systems with chained logic',
+      'AI triggers AI — output from one process feeds the next automatically',
+      'Lead PD, influence policy, or shape district AI implementation',
+      'Think critically about AI bias, equity, and student data rights',
+      'Others build on top of your work — it\'s infrastructure, not a tool',
+      'Connected to broader AI + education research or communities',
+      'Prototype capabilities that don\'t yet exist in ed-tech',
+      'You\'re not just using AI — you\'re deciding what it looks like in schools',
+    ],
+  },
+];
+
+const nextSteps = {
+  '1-2': ['Pick one real work task this week — a parent email, a meeting agenda — and run it through Claude or ChatGPT before you send it','Use AI to summarize the next long policy or document you have to read','Give yourself permission to experiment — there\'s no grade, no wrong answer','Set a goal: use it at least once every single workday for two weeks straight'],
+  '1-3': ['Start with one consistent habit: use AI every time you write a parent communication','Use it to draft your next lesson plan — give it your standards, grade level, and learning objective','Learn to write better prompts: be specific, give context, ask it to revise','Explore educator prompt libraries online — you don\'t have to invent everything from scratch'],
+  '1-4': ['Don\'t skip Zones 2 and 3 — fluency before automation. Build the daily habit first','Once you\'re a consistent user, start learning Google Apps Script basics','Understand how API calls work — that\'s the skill that unlocks everything at Zone 4','Connect with your district\'s AI ambassador to find out what\'s already been built'],
+  '1-5': ['Ambitious goal — and achievable. Start by becoming a consistent Zone 3 user first','Document everything as you grow — your story will be your most powerful teaching tool later','Volunteer to share your learning journey with colleagues even before you feel fully ready','Get involved in district AI conversations now, not after you feel like an expert'],
+  '2-3': ['Commit to using AI every time you prep a lesson or create an assessment — not just when stuck','Write more specific prompts: always include grade level, subject, and what you\'re trying to accomplish','Build your first Gem or Claude Project tailored specifically to your subject or caseload','Explore what others have built — there are strong templates you can start from'],
+  '2-4': ['First make AI use a weekly habit across your whole role — Zone 3 is the foundation for Zone 4','Learn Google Apps Script basics — even a simple script that sends a formatted email is a starting point','Then connect that script to the Gemini API with a single API call','Ask yourself: what do I do every single week that feels like copy-paste? That\'s your first automation target'],
+  '2-5': ['Deepen your daily use first — you can\'t lead others somewhere you haven\'t been','Once you\'re consistent, start sharing what works with one colleague at a time','Volunteer for AI pilots or committees at your school — get inside the decision-making','Your memory of being a beginner is genuinely valuable when designing PD for others'],
+  '3-4': ['Identify your most repetitive weekly task and ask: can this run automatically?','Learn Google Apps Script + Gemini API — this is the specific stack that unlocks Zone 4 in Google districts','Build something small first: a script that drafts a communication and emails it based on a form response','Don\'t wait until you feel ready. You learn by building something that breaks and fixing it'],
+  '3-5': ['Build something small that others can actually use — not a Gem, actual running software','Offer to share your current workflow with colleagues or at a staff meeting — teach what you already know','Connect with your district\'s AI team and ask where you can contribute','Start thinking beyond your classroom: what problem at your school could AI help solve at scale?'],
+  '4-5': ['Start leading — offer to run PD, create a resource guide, or mentor a colleague at Zone 2','Get into district AI policy conversations: your practical experience is rare and they need your perspective','Document and publish your systems so others can learn from and build on your work','Ask yourself: what would you build with zero constraints? Then prototype the smallest version this month'],
+  'same': ['You\'re already where you want to be — now go deeper, not just further','Think about sustainability: are your AI habits consistent, or do they depend on the right mood?','Consider what it would look like to help one colleague move up just one zone','Set a stretch goal within your current zone — what\'s the best possible version of how you already work?'],
+  'back': ['Your goal is actually behind where you already are — consider raising the bar','You\'ve already reached what you set as a target: what would the next version of that look like?','Think about what you\'re doing well and how you could deepen or systematize it','Consider: who in your building is a zone or two behind you, and how could you help them move forward?'],
+};
+
+// State
+let nowZone = null;
+let yearZone = null;
+let longZone = null;
+let expandedZone = null;
+
+function getPct(z) {
+  const positions = [10, 28, 50, 72, 90];
+  return positions[z - 1];
+}
+
+function renderRoadPins() {
+  const pinsEl = document.getElementById('road-pins');
+  const fillEl = document.getElementById('road-fill');
+  pinsEl.innerHTML = '';
+
+  if (nowZone) {
+    fillEl.style.width = getPct(nowZone) + '%';
+  } else {
+    fillEl.style.width = '0%';
+  }
+
+  const pins = [];
+  if (nowZone) pins.push({ z: nowZone, label: 'Now', type: 'now' });
+  if (yearZone && yearZone !== nowZone) pins.push({ z: yearZone, label: '1yr', type: 'year' });
+  if (longZone && longZone !== nowZone && longZone !== yearZone) pins.push({ z: longZone, label: 'Long', type: 'long' });
+
+  pins.forEach(p => {
+    const pct = getPct(p.z);
+    const color = COLORS[p.z - 1];
+    const el = document.createElement('div');
+    el.className = 'road-pin';
+    el.style.left = pct + '%';
+
+    const dotColors = {
+      now: `background:${color}; border-color:${color}; color:#fff;`,
+      year: `background:transparent; border-color:${color}; color:${color};`,
+      long: `background:transparent; border-color:rgba(255,255,255,0.3); color:rgba(255,255,255,0.5);`
+    };
+
+    el.innerHTML = `
+      <div class="road-pin-dot" style="${dotColors[p.type]}">${p.label === 'Now' ? '●' : p.label === '1yr' ? '◎' : '○'}</div>
+      <span class="road-pin-label" style="color:${p.type === 'now' ? color : p.type === 'year' ? color : 'rgba(255,255,255,0.35)'}">${p.label}</span>
+    `;
+    pinsEl.appendChild(el);
+  });
+}
+
+function renderZones() {
+  const container = document.getElementById('zones-container');
+  container.innerHTML = '';
+
+  zones.forEach((z, idx) => {
+    // Insert cliff gap between zone 3 and 4
+    if (idx === 3) {
+      const gap = document.createElement('div');
+      gap.style.cssText = 'position:relative; height:38px; z-index:10;';
+      gap.innerHTML = `
+        <div style="position:absolute;left:0;right:0;top:0;height:38px;background:var(--bg);display:flex;align-items:center;justify-content:center;border-left:1px dashed rgba(255,107,53,0.35);border-right:1px dashed rgba(255,107,53,0.35);">
+          <div style="height:1px;flex:1;background:rgba(255,107,53,0.2);margin:0 16px;"></div>
+          <span style="font-family:'DM Mono',monospace;font-size:0.5rem;letter-spacing:0.2em;text-transform:uppercase;color:#ff6b35;opacity:0.75;">↑ Most stop here &nbsp;·&nbsp; The real cliff &nbsp;·&nbsp; Most start here ↓</span>
+          <div style="height:1px;flex:1;background:rgba(255,107,53,0.2);margin:0 16px;"></div>
+        </div>
+      `;
+      container.appendChild(gap);
+    }
+
+    const isCurrent = nowZone === z.id;
+    const isYear = yearZone === z.id;
+    const isLong = longZone === z.id;
+    const isExpanded = expandedZone === z.id;
+
+    const card = document.createElement('div');
+    card.className = 'zone' + (isCurrent ? ' is-current' : '');
+    card.id = 'zone-' + z.id;
+
+    let badgesHtml = '';
+    if (isCurrent || isYear || isLong) {
+      badgesHtml = '<div class="zone-badges">';
+      if (isCurrent) badgesHtml += `<span class="badge badge-now" style="border-color:${z.color};color:${z.color};">● I Am Here</span>`;
+      if (isYear)   badgesHtml += `<span class="badge badge-year" style="border-color:${z.color};color:${z.color};">◎ 1-Year Goal</span>`;
+      if (isLong)   badgesHtml += `<span class="badge badge-long">○ Long-Term</span>`;
+      badgesHtml += '</div>';
+    }
+
+    let cliffNoteHtml = '';
+    if (z.cliffNote) {
+      cliffNoteHtml = `<div class="cliff-note">${z.cliffNote}</div>`;
+    }
+
+    card.innerHTML = `
+      <div class="zone-stripe" style="background:${z.color};"></div>
+      <div class="zone-inner" onclick="toggleExpand(${z.id})">
+        <div class="zone-num" style="color:${z.color};">${z.id}</div>
+        <div class="zone-meta">
+          <div class="zone-eyebrow" style="color:${z.color};">${z.label}</div>
+          <div class="zone-name">${z.name}</div>
+          <div class="zone-tag">${z.tag}</div>
+          ${badgesHtml}
+        </div>
+        <div class="zone-chevron${isExpanded ? ' open' : ''}">▼</div>
+      </div>
+      <div class="zone-expanded${isExpanded ? ' open' : ''}">
+        <div class="zone-check" style="border-color:${z.color};">
+          <div class="zone-check-label">Self-check</div>
+          ${z.check}
+        </div>
+        <div class="zone-bullets-label">What this actually looks like</div>
+        <div class="zone-bullets">
+          ${z.bullets.map(b => `<div class="zone-bullet"><span class="zone-bullet-arrow" style="color:${z.color};">›</span>${b}</div>`).join('')}
+        </div>
+        ${cliffNoteHtml}
+        <div class="zone-actions">
+          <button class="zone-btn" style="border-color:${z.color};color:${isCurrent ? '#fff' : z.color};background:${isCurrent ? z.color : 'transparent'};" onclick="event.stopPropagation();setNow(${z.id})">
+            ${isCurrent ? '✓ I Am Here' : '○ I Am Here'}
+          </button>
+          <button class="zone-btn" style="border-color:${z.color};color:${isYear ? '#fff' : z.color};background:${isYear ? z.color + '33' : 'transparent'};" onclick="event.stopPropagation();setYear(${z.id})">
+            ${isYear ? '◎ 1-Year Goal' : '◎ 1-Year Goal'}
+          </button>
+          <button class="zone-btn" style="border-color:rgba(255,255,255,0.18);color:${isLong ? 'rgba(255,255,255,0.8)' : 'rgba(255,255,255,0.3)'};background:${isLong ? 'rgba(255,255,255,0.07)' : 'transparent'};" onclick="event.stopPropagation();setLong(${z.id})">
+            ${isLong ? '○ Long-Term ✓' : '○ Long-Term Goal'}
+          </button>
+          <button class="zone-btn" style="border-color:rgba(255,255,255,0.1);color:rgba(255,255,255,0.3);" onclick="event.stopPropagation();toggleExpand(${z.id})">
+            ${isExpanded ? '▲ Less' : '▼ More'}
+          </button>
+        </div>
+      </div>
+    `;
+
+    container.appendChild(card);
+  });
+}
+
+function renderResults() {
+  const el = document.getElementById('results');
+  if (!nowZone || !yearZone) {
+    el.classList.remove('visible');
+    return;
+  }
+
+  el.classList.add('visible');
+  const zNow = zones[nowZone - 1];
+  const zYear = zones[yearZone - 1];
+  const zLong = longZone ? zones[longZone - 1] : null;
+
+  let title, sub, stepKey;
+
+  if (nowZone === yearZone) {
+    title = "You're Right Where You Want to Be";
+    sub = `Zone ${nowZone} · ${zNow.name} — now let's go deeper.`;
+    stepKey = 'same';
+  } else if (yearZone > nowZone) {
+    const gap = yearZone - nowZone;
+    title = gap === 1 ? 'One Zone of Growth Ahead' : `${gap} Zones of Growth Ahead`;
+    sub = `From Zone ${nowZone} (${zNow.name}) to Zone ${yearZone} (${zYear.name}) — here's how to close that gap.`;
+    stepKey = `${nowZone}-${yearZone}`;
+  } else {
+    title = "You've Already Passed Your Goal";
+    sub = `You're at Zone ${nowZone} — beyond your 1-year target. Time to raise the bar.`;
+    stepKey = 'back';
+  }
+
+  const steps = nextSteps[stepKey] || nextSteps['same'];
+
+  let longPinHtml = '';
+  if (zLong) {
+    longPinHtml = `
+      <div class="results-arrow">→</div>
+      <div class="results-pin" style="background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.55);border:1px solid rgba(255,255,255,0.15);">
+        Long-Term: Zone ${longZone} · ${zLong.name}
+      </div>
+    `;
+  }
+
+  el.innerHTML = `
+    <div class="results-inner">
+      <h2 class="results-title">${title}</h2>
+      <p class="results-sub">${sub}</p>
+      <div class="results-pins">
+        <div class="results-pin" style="background:${zNow.color};color:#fff;">Zone ${nowZone}: ${zNow.name}</div>
+        <div class="results-arrow">→</div>
+        <div class="results-pin" style="background:${zYear.color};color:#fff;">1 Year: Zone ${yearZone}: ${zYear.name}</div>
+        ${longPinHtml}
+      </div>
+      <div class="results-divider"></div>
+      <p class="results-steps-label">Your Next Steps</p>
+      <div class="results-steps">
+        ${steps.map(s => `<div class="results-step"><span class="results-step-arrow">→</span>${s}</div>`).join('')}
+      </div>
+      <button class="results-reset" onclick="resetAll()">↺ Start Over</button>
+    </div>
+  `;
+}
+
+function toggleExpand(id) {
+  expandedZone = expandedZone === id ? null : id;
+  renderZones();
+}
+
+function setNow(id) {
+  nowZone = nowZone === id ? null : id;
+  renderRoadPins();
+  renderZones();
+  renderResults();
+}
+
+function setYear(id) {
+  yearZone = yearZone === id ? null : id;
+  renderRoadPins();
+  renderZones();
+  renderResults();
+}
+
+function setLong(id) {
+  longZone = longZone === id ? null : id;
+  renderRoadPins();
+  renderZones();
+  renderResults();
+}
+
+function resetAll() {
+  nowZone = null; yearZone = null; longZone = null; expandedZone = null;
+  renderRoadPins();
+  renderZones();
+  renderResults();
+}
+
+// Init
+renderRoadPins();
+renderZones();
+renderResults();
+</script>
+</body>
+</html>
