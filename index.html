@@ -7,28 +7,35 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #080e1a;
-  --surface: #111b2e;
-  --surface2: #162035;
-  --border: rgba(255,255,255,0.1);
-  --border2: rgba(255,255,255,0.18);
-  --text: #f0f2f8;
-  --muted: #8b94b0;
-  --dim: rgba(255,255,255,0.35);
+  --navy: #1c3a6e;
+  --navy-dark: #122a54;
+  --navy-light: #e8edf6;
+  --navy-mid: #2d4f8a;
+  --red: #cc2229;
+  --red-light: #fbeaea;
+  --white: #ffffff;
+  --gray-bg: #f4f6f9;
+  --gray-card: #ffffff;
+  --gray-border: #dde2ec;
+  --gray-border2: #c8d0e0;
+  --text: #1a2540;
+  --text-mid: #3d4d6e;
+  --text-muted: #6b7a9a;
+  --text-light: #8b98b8;
 
-  --z1: #4a9fea;
-  --z2: #5bb8e8;
-  --z3: #a593f0;
-  --z4: #e8503e;
-  --z5: #ff6b35;
+  --z1: #2563a8;
+  --z2: #0e8fc4;
+  --z3: #7b5ea7;
+  --z4: #cc2229;
+  --z5: #e05a00;
 
-  --cliff: #ff6b35;
+  --cliff: #cc2229;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-  background: var(--bg);
+  background: var(--gray-bg);
   color: var(--text);
   font-family: 'DM Sans', sans-serif;
   min-height: 100vh;
@@ -37,67 +44,97 @@ body {
 
 /* ── HEADER ── */
 .header {
-  padding: 52px 24px 40px;
-  text-align: center;
-  border-bottom: 1px solid var(--border);
+  background: var(--navy-dark);
+  padding: 0;
   position: relative;
   overflow: hidden;
 }
-.header::after {
+.header-topbar {
+  background: var(--navy);
+  padding: 10px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 3px solid var(--red);
+}
+.header-logo {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.header-logo-agua {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.8rem;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  color: #fff;
+}
+.header-logo-agua span { color: var(--red); }
+.header-logo-sub {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.52rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.55);
+  margin-top: 2px;
+}
+.header-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  text-align: right;
+}
+
+.header-hero {
+  padding: 44px 32px 40px;
+  text-align: center;
+  position: relative;
+}
+.header-hero::after {
   content: '';
   position: absolute;
-  bottom: 0; left: 0; right: 0; height: 2px;
-  background: linear-gradient(to right, var(--z1), var(--z3), var(--z5));
-}
-.header-eyebrow {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.6rem;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: var(--z2);
-  margin-bottom: 16px;
+  bottom: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(to right, var(--z1), var(--z2), var(--z3), var(--z4), var(--z5));
 }
 .header-title {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(3.5rem, 10vw, 7rem);
+  font-size: clamp(3rem, 9vw, 6.5rem);
   line-height: 0.9;
   letter-spacing: 0.04em;
-  color: var(--text);
-  margin-bottom: 18px;
+  color: #fff;
+  margin-bottom: 16px;
 }
 .header-title span {
-  display: block;
-  background: linear-gradient(135deg, #4a9fd4 0%, #e8eaf0 50%, var(--z5) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--red);
 }
 .header-sub {
-  font-size: 0.88rem;
-  color: var(--muted);
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.65);
   font-weight: 300;
-  max-width: 480px;
+  max-width: 500px;
   margin: 0 auto;
   line-height: 1.7;
 }
 
 /* ── INSTRUCTION BAR ── */
 .instruction {
-  background: linear-gradient(to right, #0d1e3a, #1a0908);
-  padding: 10px 20px;
+  background: var(--navy);
+  padding: 11px 20px;
   text-align: center;
   font-family: 'DM Mono', monospace;
   font-size: 0.6rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.55);
+  color: rgba(255,255,255,0.5);
 }
-.instruction span { color: rgba(255,255,255,0.85); }
+.instruction span { color: rgba(255,255,255,0.9); }
 
 /* ── ROAD VISUAL ── */
 .road-wrap {
   max-width: 900px;
-  margin: 40px auto 0;
+  margin: 36px auto 0;
   padding: 0 24px;
 }
 .road-labels {
@@ -107,7 +144,7 @@ body {
   font-size: 0.55rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: var(--text-light);
   margin-bottom: 8px;
 }
 .road-track {
@@ -118,8 +155,7 @@ body {
   position: absolute;
   left: 0; top: 0; right: 0; bottom: 0;
   border-radius: 7px;
-  background: linear-gradient(to right, var(--z1), var(--z2), var(--z3), var(--z4), var(--z5));
-  opacity: 0.25;
+  background: var(--gray-border);
 }
 .road-fill {
   position: absolute;
@@ -153,7 +189,7 @@ body {
   font-family: 'DM Mono', monospace;
   font-size: 0.55rem;
   font-weight: 500;
-  background: var(--bg);
+  background: var(--white);
   transition: all 0.3s;
 }
 .road-pin-label {
@@ -163,11 +199,19 @@ body {
   text-transform: uppercase;
   white-space: nowrap;
 }
+.road-horizon {
+  text-align: right;
+  margin-top: 5px;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.5rem;
+  color: var(--text-light);
+  font-style: italic;
+}
 
 /* ── CLIFF CALLOUT ── */
 .cliff-callout {
   max-width: 900px;
-  margin: 32px auto 0;
+  margin: 28px auto 0;
   padding: 0 24px;
   display: flex;
   align-items: center;
@@ -176,82 +220,46 @@ body {
 .cliff-line {
   flex: 1;
   height: 1px;
-  background: var(--border);
+  background: var(--gray-border2);
 }
 .cliff-badge {
   font-family: 'DM Mono', monospace;
   font-size: 0.57rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--cliff);
+  color: var(--red);
   padding: 6px 14px;
-  border: 1px solid rgba(255, 107, 53, 0.3);
+  border: 1px solid rgba(204,34,41,0.3);
   border-radius: 2px;
   white-space: nowrap;
+  background: var(--red-light);
 }
 
-/* ── ZONES GRID ── */
+/* ── ZONES ── */
 .zones {
   max-width: 900px;
-  margin: 28px auto 0;
+  margin: 20px auto 0;
   padding: 0 24px;
   display: flex;
   flex-direction: column;
-  gap: 0;
 }
 
-/* ── ZONE CARD ── */
 .zone {
-  border: 1px solid var(--border);
+  border: 1px solid var(--gray-border);
   border-bottom: none;
-  background: var(--surface);
+  background: var(--white);
   position: relative;
   overflow: hidden;
   transition: all 0.2s;
 }
-.zone:first-child { border-radius: 6px 6px 0 0; }
-.zone:last-child { border-bottom: 1px solid var(--border); border-radius: 0 0 6px 6px; }
+.zone:first-child { border-radius: 8px 8px 0 0; }
+.zone:last-child { border-bottom: 1px solid var(--gray-border); border-radius: 0 0 8px 8px; }
+.zone:hover { background: #fafbfd; }
+.zone.is-current { background: #f6f8fd; border-color: var(--gray-border2); }
 
-.zone.is-current { background: var(--surface2); }
 .zone-stripe {
   position: absolute;
-  left: 0; top: 0; bottom: 0; width: 4px;
-}
-
-/* cliff gap */
-.cliff-gap {
-  height: 0;
-  position: relative;
-  overflow: visible;
-  z-index: 10;
-}
-.cliff-gap-inner {
-  position: absolute;
-  left: 0; right: 0;
-  top: -1px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--bg);
-  border-left: 1px dashed rgba(255,107,53,0.4);
-  border-right: 1px dashed rgba(255,107,53,0.4);
-}
-.cliff-gap-text {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.52rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--cliff);
-  opacity: 0.8;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.cliff-gap-line {
-  flex: 1;
-  height: 1px;
-  background: rgba(255,107,53,0.25);
+  left: 0; top: 0; bottom: 0; width: 5px;
 }
 
 .zone-inner {
@@ -270,9 +278,10 @@ body {
   flex-shrink: 0;
   text-align: center;
   transition: opacity 0.2s;
-  opacity: 0.45;
+  opacity: 0.2;
 }
-.zone.is-current .zone-num { opacity: 0.85; }
+.zone.is-current .zone-num { opacity: 0.7; }
+.zone:hover .zone-num { opacity: 0.35; }
 
 .zone-meta { flex: 1; }
 .zone-eyebrow {
@@ -281,23 +290,25 @@ body {
   letter-spacing: 0.22em;
   text-transform: uppercase;
   margin-bottom: 3px;
+  font-weight: 500;
 }
 .zone-name {
   font-size: 1.4rem;
   font-weight: 800;
   letter-spacing: 0.015em;
   line-height: 1;
+  color: var(--text);
 }
 .zone-tag {
-  font-size: 0.78rem;
-  color: #9aa3bc;
+  font-size: 0.8rem;
+  color: var(--text-muted);
   font-style: italic;
   margin-top: 5px;
   line-height: 1.5;
-  max-width: 560px;
+  max-width: 580px;
 }
 .zone-chevron {
-  color: var(--dim);
+  color: var(--text-light);
   font-size: 0.65rem;
   margin-top: 6px;
   transition: transform 0.2s;
@@ -305,7 +316,6 @@ body {
 }
 .zone-chevron.open { transform: rotate(180deg); }
 
-/* badges */
 .zone-badges {
   display: flex;
   gap: 6px;
@@ -320,21 +330,7 @@ body {
   padding: 3px 8px;
   border-radius: 2px;
   border: 1px solid;
-}
-.badge-now {
-  background: transparent;
-  color: var(--text);
-  border-color: rgba(255,255,255,0.3);
-}
-.badge-year {
-  background: transparent;
-  border-color: rgba(255,255,255,0.2);
-  color: rgba(255,255,255,0.5);
-}
-.badge-long {
-  background: transparent;
-  border-color: rgba(255,255,255,0.12);
-  color: rgba(255,255,255,0.35);
+  font-weight: 500;
 }
 
 /* expanded */
@@ -346,20 +342,21 @@ body {
 
 .zone-check {
   margin-bottom: 14px;
-  padding: 11px 14px;
-  background: rgba(255,255,255,0.05);
-  border-left: 2px solid;
-  font-size: 0.8rem;
-  line-height: 1.6;
-  color: rgba(230,235,248,0.9);
+  padding: 12px 14px;
+  background: var(--gray-bg);
+  border-left: 3px solid;
+  font-size: 0.81rem;
+  line-height: 1.65;
+  color: var(--text-mid);
   font-style: italic;
+  border-radius: 0 4px 4px 0;
 }
 .zone-check-label {
   font-family: 'DM Mono', monospace;
   font-size: 0.5rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: var(--text-light);
   margin-bottom: 6px;
   font-style: normal;
 }
@@ -369,7 +366,7 @@ body {
   font-size: 0.5rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: var(--text-light);
   margin-bottom: 10px;
 }
 .zone-bullets {
@@ -382,9 +379,9 @@ body {
   display: flex;
   gap: 8px;
   align-items: flex-start;
-  font-size: 0.78rem;
+  font-size: 0.79rem;
   line-height: 1.55;
-  color: rgba(220,228,242,0.92);
+  color: var(--text-mid);
 }
 .zone-bullet-arrow {
   font-weight: 700;
@@ -395,15 +392,15 @@ body {
 .cliff-note {
   margin: 0 0 16px;
   padding: 12px 14px;
-  background: rgba(255,107,53,0.05);
-  border-left: 2px dashed rgba(255,107,53,0.35);
-  font-size: 0.74rem;
-  color: rgba(200,208,220,0.5);
+  background: #fff5f5;
+  border-left: 3px solid rgba(204,34,41,0.4);
+  font-size: 0.77rem;
+  color: #7a2228;
   font-style: italic;
   line-height: 1.65;
+  border-radius: 0 4px 4px 0;
 }
 
-/* zone actions */
 .zone-actions {
   display: flex;
   gap: 8px;
@@ -422,9 +419,9 @@ body {
   background: transparent;
   transition: all 0.15s;
 }
-.zone-btn:hover { opacity: 0.8; }
+.zone-btn:hover { opacity: 0.75; }
 
-/* ── RESULTS PANEL ── */
+/* ── RESULTS ── */
 .results {
   max-width: 900px;
   margin: 16px auto 0;
@@ -433,18 +430,19 @@ body {
 }
 .results.visible { display: block; }
 .results-inner {
-  background: linear-gradient(145deg, #0a1828, #160808);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 6px;
+  background: var(--white);
+  border: 1px solid var(--gray-border);
+  border-radius: 8px;
   padding: 28px 28px 24px;
   position: relative;
   overflow: hidden;
+  box-shadow: 0 2px 12px rgba(28,58,110,0.08);
 }
 .results-inner::before {
   content: '';
   position: absolute;
-  top: 0; left: 0; right: 0; height: 2px;
-  background: linear-gradient(to right, var(--z1), var(--z5));
+  top: 0; left: 0; right: 0; height: 4px;
+  background: linear-gradient(to right, var(--navy), var(--red));
 }
 .results-title {
   font-family: 'Bebas Neue', sans-serif;
@@ -452,10 +450,11 @@ body {
   letter-spacing: 0.04em;
   line-height: 1;
   margin-bottom: 4px;
+  color: var(--navy-dark);
 }
 .results-sub {
-  font-size: 0.78rem;
-  color: var(--muted);
+  font-size: 0.8rem;
+  color: var(--text-muted);
   font-style: italic;
   margin-bottom: 22px;
 }
@@ -464,21 +463,23 @@ body {
   gap: 10px;
   flex-wrap: wrap;
   margin-bottom: 20px;
+  align-items: center;
 }
 .results-pin {
   padding: 8px 16px;
   border-radius: 3px;
   font-weight: 700;
   font-size: 0.84rem;
+  color: #fff;
 }
-.results-arrow { font-size: 1.1rem; color: var(--dim); align-self: center; }
-.results-divider { height: 1px; background: rgba(255,255,255,0.06); margin-bottom: 18px; }
+.results-arrow { font-size: 1.1rem; color: var(--text-light); }
+.results-divider { height: 1px; background: var(--gray-border); margin-bottom: 18px; }
 .results-steps-label {
   font-family: 'DM Mono', monospace;
   font-size: 0.5rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: var(--text-light);
   margin-bottom: 12px;
 }
 .results-steps { display: flex; flex-direction: column; gap: 10px; }
@@ -487,9 +488,9 @@ body {
   gap: 10px;
   font-size: 0.83rem;
   line-height: 1.6;
-  color: rgba(200,208,220,0.88);
+  color: var(--text-mid);
 }
-.results-step-arrow { color: var(--z5); font-weight: 700; flex-shrink: 0; }
+.results-step-arrow { color: var(--red); font-weight: 700; flex-shrink: 0; }
 .results-reset {
   margin-top: 20px;
   font-family: 'DM Mono', monospace;
@@ -497,14 +498,43 @@ body {
   letter-spacing: 0.14em;
   text-transform: uppercase;
   background: transparent;
-  border: 1px solid rgba(255,255,255,0.12);
-  color: rgba(255,255,255,0.3);
+  border: 1px solid var(--gray-border2);
+  color: var(--text-light);
   padding: 8px 16px;
   border-radius: 3px;
   cursor: pointer;
   transition: all 0.15s;
 }
-.results-reset:hover { border-color: rgba(255,255,255,0.25); color: rgba(255,255,255,0.5); }
+.results-reset:hover { border-color: var(--navy); color: var(--navy); }
+
+/* ── CLIFF GAP ── */
+.cliff-gap {
+  height: 36px;
+  position: relative;
+  background: var(--gray-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-left: 1px dashed rgba(204,34,41,0.35);
+  border-right: 1px dashed rgba(204,34,41,0.35);
+}
+.cliff-gap-inner {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 0 16px;
+  gap: 12px;
+}
+.cliff-gap-line { flex: 1; height: 1px; background: rgba(204,34,41,0.2); }
+.cliff-gap-text {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.5rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--red);
+  opacity: 0.8;
+  white-space: nowrap;
+}
 
 /* ── HORIZON ── */
 .horizon {
@@ -513,49 +543,54 @@ body {
   padding: 0 24px;
 }
 .horizon-inner {
-  border: 1px dashed rgba(255,255,255,0.09);
-  background: linear-gradient(135deg, rgba(12,24,48,0.7), rgba(32,8,6,0.4));
-  border-radius: 6px;
-  padding: 24px 24px 20px;
+  border: 1px solid var(--navy);
+  background: var(--navy-dark);
+  border-radius: 8px;
+  padding: 24px 24px 22px;
 }
 .horizon-eyebrow {
   font-family: 'DM Mono', monospace;
   font-size: 0.52rem;
   letter-spacing: 0.26em;
   text-transform: uppercase;
-  color: var(--dim);
+  color: rgba(255,255,255,0.35);
   margin-bottom: 8px;
 }
 .horizon-title {
-  font-size: 1.1rem;
+  font-size: 1.3rem;
   font-weight: 700;
-  color: rgba(255,255,255,0.3);
+  color: rgba(255,255,255,0.9);
   margin-bottom: 10px;
 }
 .horizon-body {
-  font-size: 0.77rem;
-  color: rgba(200,208,220,0.4);
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.55);
   font-style: italic;
-  line-height: 1.65;
-  max-width: 680px;
-  margin-bottom: 16px;
+  line-height: 1.7;
+  max-width: 700px;
+  margin-bottom: 18px;
 }
-.horizon-pills { display: flex; flex-wrap: wrap; gap: 7px; }
+.horizon-pills { display: flex; flex-wrap: wrap; gap: 8px; }
 .horizon-pill {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.53rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  padding: 5px 11px;
-  border-radius: 20px;
-  border: 1px solid rgba(255,255,255,0.08);
-  color: rgba(255,255,255,0.25);
-  background: rgba(255,255,255,0.02);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 3px;
+  border: none;
+  color: #fff;
+  background: var(--navy);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1);
 }
+.horizon-pill:nth-child(3n+1) { background: var(--navy); }
+.horizon-pill:nth-child(3n+2) { background: var(--navy-mid); }
+.horizon-pill:nth-child(3n)   { background: #1a3a6e; border-left: 3px solid var(--red); }
 
 @media (max-width: 600px) {
   .zone-bullets { grid-template-columns: 1fr; }
   .results-pins { gap: 6px; }
+  .header-hero { padding: 32px 20px 28px; }
 }
 </style>
 </head>
@@ -563,15 +598,23 @@ body {
 
 <!-- HEADER -->
 <div class="header">
-  <p class="header-eyebrow">Agua Fría Union High School District · AI Learning Initiative</p>
-  <h1 class="header-title"><span>EDUCATOR AI<br>ROADMAP</span></h1>
-  <p class="header-sub">Where are you today. Where do you want to be. What it actually takes to get there.</p>
+  <div class="header-topbar">
+    <div class="header-logo">
+      <div class="header-logo-agua">AGUA<span>FRIA</span></div>
+      <div class="header-logo-sub">High School District</div>
+    </div>
+    <div class="header-badge">AI Learning Initiative<br>2025–26</div>
+  </div>
+  <div class="header-hero">
+    <h1 class="header-title">EDUCATOR AI<br><span>ROADMAP</span></h1>
+    <p class="header-sub">Where are you today. Where do you want to be. What it actually takes to get there.</p>
+  </div>
 </div>
 
 <!-- INSTRUCTION BAR -->
 <div class="instruction">
-  <span>Mark where you are now</span> &nbsp;·&nbsp; 
-  <span>Set your one-year goal</span> &nbsp;·&nbsp; 
+  <span>Mark where you are now</span> &nbsp;·&nbsp;
+  <span>Set your one-year goal</span> &nbsp;·&nbsp;
   <span>Set your long-term target</span>
 </div>
 
@@ -580,14 +623,14 @@ body {
   <div class="road-labels">
     <span>Just Starting</span>
     <span>Frontier Educator</span>
-    <span style="color: rgba(255,255,255,0.13); font-style: italic;">Beyond ···</span>
+    <span style="font-style:italic;">Beyond ···</span>
   </div>
   <div class="road-track">
     <div class="road-bar"></div>
     <div class="road-fill" id="road-fill"></div>
     <div class="road-pins" id="road-pins"></div>
   </div>
-  <div style="text-align:right; margin-top:5px; font-family:'DM Mono',monospace; font-size:0.5rem; color:rgba(255,255,255,0.15); font-style:italic;">∞ &nbsp;The horizon keeps moving</div>
+  <div class="road-horizon">∞ &nbsp;The horizon keeps moving</div>
 </div>
 
 <!-- CLIFF CALLOUT -->
@@ -624,7 +667,7 @@ body {
 </div>
 
 <script>
-const COLORS = ['#4a9fea','#5bb8e8','#a593f0','#e8503e','#ff6b35'];
+const COLORS = ['#2563a8','#0e8fc4','#7b5ea7','#cc2229','#e05a00'];
 
 const zones = [
   {
@@ -700,7 +743,7 @@ const zones = [
     label: 'Zone 5 · Frontier',
     name: 'Architect',
     tag: '"I design systems. AI triggers AI. Infrastructure others build on top of."',
-    check: 'Are you designing multi-step AI pipelines? Building systems where one AI output feeds another process automatically? Are you influencing what AI looks like in education at a structural level — policy, culture, what gets built next? Are you asking what AI should do in schools, not just what it can do for you?',
+    check: 'Are you designing multi-step AI pipelines? Building systems where one AI output feeds another process automatically? Are you influencing what AI looks like in education at a structural level — policy, culture, what gets built next?',
     bullets: [
       'Design multi-component AI systems with chained logic',
       'AI triggers AI — output from one process feeds the next automatically',
@@ -729,49 +772,36 @@ const nextSteps = {
   'back': ['Your goal is actually behind where you already are — consider raising the bar','You\'ve already reached what you set as a target: what would the next version of that look like?','Think about what you\'re doing well and how you could deepen or systematize it','Consider: who in your building is a zone or two behind you, and how could you help them move forward?'],
 };
 
-// State
-let nowZone = null;
-let yearZone = null;
-let longZone = null;
-let expandedZone = null;
+let nowZone = null, yearZone = null, longZone = null, expandedZone = null;
 
 function getPct(z) {
-  const positions = [10, 28, 50, 72, 90];
-  return positions[z - 1];
+  return [10,28,50,72,90][z-1];
 }
 
 function renderRoadPins() {
   const pinsEl = document.getElementById('road-pins');
   const fillEl = document.getElementById('road-fill');
   pinsEl.innerHTML = '';
-
-  if (nowZone) {
-    fillEl.style.width = getPct(nowZone) + '%';
-  } else {
-    fillEl.style.width = '0%';
-  }
+  fillEl.style.width = nowZone ? getPct(nowZone)+'%' : '0%';
 
   const pins = [];
-  if (nowZone) pins.push({ z: nowZone, label: 'Now', type: 'now' });
-  if (yearZone && yearZone !== nowZone) pins.push({ z: yearZone, label: '1yr', type: 'year' });
-  if (longZone && longZone !== nowZone && longZone !== yearZone) pins.push({ z: longZone, label: 'Long', type: 'long' });
+  if (nowZone) pins.push({z:nowZone,label:'Now',type:'now'});
+  if (yearZone && yearZone!==nowZone) pins.push({z:yearZone,label:'1yr',type:'year'});
+  if (longZone && longZone!==nowZone && longZone!==yearZone) pins.push({z:longZone,label:'Long',type:'long'});
 
   pins.forEach(p => {
-    const pct = getPct(p.z);
-    const color = COLORS[p.z - 1];
+    const color = COLORS[p.z-1];
     const el = document.createElement('div');
     el.className = 'road-pin';
-    el.style.left = pct + '%';
-
-    const dotColors = {
-      now: `background:${color}; border-color:${color}; color:#fff;`,
-      year: `background:transparent; border-color:${color}; color:${color};`,
-      long: `background:transparent; border-color:rgba(255,255,255,0.3); color:rgba(255,255,255,0.5);`
+    el.style.left = getPct(p.z)+'%';
+    const styles = {
+      now: `background:${color};border-color:${color};color:#fff;`,
+      year: `background:#fff;border-color:${color};color:${color};`,
+      long: `background:#fff;border-color:#c8d0e0;color:#8b98b8;`
     };
-
     el.innerHTML = `
-      <div class="road-pin-dot" style="${dotColors[p.type]}">${p.label === 'Now' ? '●' : p.label === '1yr' ? '◎' : '○'}</div>
-      <span class="road-pin-label" style="color:${p.type === 'now' ? color : p.type === 'year' ? color : 'rgba(255,255,255,0.35)'}">${p.label}</span>
+      <div class="road-pin-dot" style="${styles[p.type]}">${p.type==='now'?'●':p.type==='year'?'◎':'○'}</div>
+      <span class="road-pin-label" style="color:${p.type==='long'?'#8b98b8':color}">${p.label}</span>
     `;
     pinsEl.appendChild(el);
   });
@@ -782,41 +812,25 @@ function renderZones() {
   container.innerHTML = '';
 
   zones.forEach((z, idx) => {
-    // Insert cliff gap between zone 3 and 4
     if (idx === 3) {
       const gap = document.createElement('div');
-      gap.style.cssText = 'position:relative; height:38px; z-index:10;';
-      gap.innerHTML = `
-        <div style="position:absolute;left:0;right:0;top:0;height:38px;background:var(--bg);display:flex;align-items:center;justify-content:center;border-left:1px dashed rgba(255,107,53,0.35);border-right:1px dashed rgba(255,107,53,0.35);">
-          <div style="height:1px;flex:1;background:rgba(255,107,53,0.2);margin:0 16px;"></div>
-          <span style="font-family:'DM Mono',monospace;font-size:0.5rem;letter-spacing:0.2em;text-transform:uppercase;color:#ff6b35;opacity:0.75;">↑ Most stop here &nbsp;·&nbsp; The real cliff &nbsp;·&nbsp; Most start here ↓</span>
-          <div style="height:1px;flex:1;background:rgba(255,107,53,0.2);margin:0 16px;"></div>
-        </div>
-      `;
+      gap.className = 'cliff-gap';
+      gap.innerHTML = `<div class="cliff-gap-inner"><div class="cliff-gap-line"></div><span class="cliff-gap-text">↑ Most stop here &nbsp;·&nbsp; The real cliff &nbsp;·&nbsp; Most start here ↓</span><div class="cliff-gap-line"></div></div>`;
       container.appendChild(gap);
     }
 
-    const isCurrent = nowZone === z.id;
-    const isYear = yearZone === z.id;
-    const isLong = longZone === z.id;
-    const isExpanded = expandedZone === z.id;
-
+    const isCurrent = nowZone===z.id, isYear=yearZone===z.id, isLong=longZone===z.id, isExpanded=expandedZone===z.id;
     const card = document.createElement('div');
-    card.className = 'zone' + (isCurrent ? ' is-current' : '');
-    card.id = 'zone-' + z.id;
+    card.className = 'zone'+(isCurrent?' is-current':'');
+    card.id = 'zone-'+z.id;
 
     let badgesHtml = '';
-    if (isCurrent || isYear || isLong) {
+    if (isCurrent||isYear||isLong) {
       badgesHtml = '<div class="zone-badges">';
-      if (isCurrent) badgesHtml += `<span class="badge badge-now" style="border-color:${z.color};color:${z.color};">● I Am Here</span>`;
-      if (isYear)   badgesHtml += `<span class="badge badge-year" style="border-color:${z.color};color:${z.color};">◎ 1-Year Goal</span>`;
-      if (isLong)   badgesHtml += `<span class="badge badge-long">○ Long-Term</span>`;
+      if (isCurrent) badgesHtml += `<span class="badge" style="border-color:${z.color};color:${z.color};background:${z.color}18;">● I Am Here</span>`;
+      if (isYear)    badgesHtml += `<span class="badge" style="border-color:${z.color};color:${z.color};background:${z.color}12;">◎ 1-Year Goal</span>`;
+      if (isLong)    badgesHtml += `<span class="badge" style="border-color:#c8d0e0;color:#6b7a9a;background:#f4f6f9;">○ Long-Term</span>`;
       badgesHtml += '</div>';
-    }
-
-    let cliffNoteHtml = '';
-    if (z.cliffNote) {
-      cliffNoteHtml = `<div class="cliff-note">${z.cliffNote}</div>`;
     }
 
     card.innerHTML = `
@@ -829,137 +843,70 @@ function renderZones() {
           <div class="zone-tag">${z.tag}</div>
           ${badgesHtml}
         </div>
-        <div class="zone-chevron${isExpanded ? ' open' : ''}">▼</div>
+        <div class="zone-chevron${isExpanded?' open':''}">▼</div>
       </div>
-      <div class="zone-expanded${isExpanded ? ' open' : ''}">
+      <div class="zone-expanded${isExpanded?' open':''}">
         <div class="zone-check" style="border-color:${z.color};">
           <div class="zone-check-label">Self-check</div>
           ${z.check}
         </div>
         <div class="zone-bullets-label">What this actually looks like</div>
         <div class="zone-bullets">
-          ${z.bullets.map(b => `<div class="zone-bullet"><span class="zone-bullet-arrow" style="color:${z.color};">›</span>${b}</div>`).join('')}
+          ${z.bullets.map(b=>`<div class="zone-bullet"><span class="zone-bullet-arrow" style="color:${z.color};">›</span>${b}</div>`).join('')}
         </div>
-        ${cliffNoteHtml}
+        ${z.cliffNote?`<div class="cliff-note">${z.cliffNote}</div>`:''}
         <div class="zone-actions">
-          <button class="zone-btn" style="border-color:${z.color};color:${isCurrent ? '#fff' : z.color};background:${isCurrent ? z.color : 'transparent'};" onclick="event.stopPropagation();setNow(${z.id})">
-            ${isCurrent ? '✓ I Am Here' : '○ I Am Here'}
-          </button>
-          <button class="zone-btn" style="border-color:${z.color};color:${isYear ? '#fff' : z.color};background:${isYear ? z.color + '33' : 'transparent'};" onclick="event.stopPropagation();setYear(${z.id})">
-            ${isYear ? '◎ 1-Year Goal' : '◎ 1-Year Goal'}
-          </button>
-          <button class="zone-btn" style="border-color:rgba(255,255,255,0.18);color:${isLong ? 'rgba(255,255,255,0.8)' : 'rgba(255,255,255,0.3)'};background:${isLong ? 'rgba(255,255,255,0.07)' : 'transparent'};" onclick="event.stopPropagation();setLong(${z.id})">
-            ${isLong ? '○ Long-Term ✓' : '○ Long-Term Goal'}
-          </button>
-          <button class="zone-btn" style="border-color:rgba(255,255,255,0.1);color:rgba(255,255,255,0.3);" onclick="event.stopPropagation();toggleExpand(${z.id})">
-            ${isExpanded ? '▲ Less' : '▼ More'}
-          </button>
+          <button class="zone-btn" style="border-color:${z.color};color:${isCurrent?'#fff':z.color};background:${isCurrent?z.color:'transparent'};" onclick="event.stopPropagation();setNow(${z.id})">${isCurrent?'✓ I Am Here':'○ I Am Here'}</button>
+          <button class="zone-btn" style="border-color:${z.color};color:${isYear?'#fff':z.color};background:${isYear?z.color+'22':'transparent'};" onclick="event.stopPropagation();setYear(${z.id})">◎ 1-Year Goal</button>
+          <button class="zone-btn" style="border-color:#c8d0e0;color:${isLong?'#3d4d6e':'#8b98b8'};background:${isLong?'#e8edf6':'transparent'};" onclick="event.stopPropagation();setLong(${z.id})">○ Long-Term Goal</button>
+          <button class="zone-btn" style="border-color:#dde2ec;color:#8b98b8;" onclick="event.stopPropagation();toggleExpand(${z.id})">${isExpanded?'▲ Less':'▼ More'}</button>
         </div>
       </div>
     `;
-
     container.appendChild(card);
   });
 }
 
 function renderResults() {
   const el = document.getElementById('results');
-  if (!nowZone || !yearZone) {
-    el.classList.remove('visible');
-    return;
-  }
-
+  if (!nowZone||!yearZone) { el.classList.remove('visible'); return; }
   el.classList.add('visible');
-  const zNow = zones[nowZone - 1];
-  const zYear = zones[yearZone - 1];
-  const zLong = longZone ? zones[longZone - 1] : null;
 
+  const zNow=zones[nowZone-1], zYear=zones[yearZone-1], zLong=longZone?zones[longZone-1]:null;
   let title, sub, stepKey;
 
-  if (nowZone === yearZone) {
-    title = "You're Right Where You Want to Be";
-    sub = `Zone ${nowZone} · ${zNow.name} — now let's go deeper.`;
-    stepKey = 'same';
-  } else if (yearZone > nowZone) {
-    const gap = yearZone - nowZone;
-    title = gap === 1 ? 'One Zone of Growth Ahead' : `${gap} Zones of Growth Ahead`;
-    sub = `From Zone ${nowZone} (${zNow.name}) to Zone ${yearZone} (${zYear.name}) — here's how to close that gap.`;
-    stepKey = `${nowZone}-${yearZone}`;
-  } else {
-    title = "You've Already Passed Your Goal";
-    sub = `You're at Zone ${nowZone} — beyond your 1-year target. Time to raise the bar.`;
-    stepKey = 'back';
-  }
+  if (nowZone===yearZone) { title="You're Right Where You Want to Be"; sub=`Zone ${nowZone} · ${zNow.name} — now let's go deeper.`; stepKey='same'; }
+  else if (yearZone>nowZone) { const gap=yearZone-nowZone; title=gap===1?'One Zone of Growth Ahead':`${gap} Zones of Growth Ahead`; sub=`From Zone ${nowZone} (${zNow.name}) to Zone ${yearZone} (${zYear.name}) — here's how to close that gap.`; stepKey=`${nowZone}-${yearZone}`; }
+  else { title="You've Already Passed Your Goal"; sub=`You're at Zone ${nowZone} — beyond your 1-year target. Time to raise the bar.`; stepKey='back'; }
 
-  const steps = nextSteps[stepKey] || nextSteps['same'];
-
-  let longPinHtml = '';
-  if (zLong) {
-    longPinHtml = `
-      <div class="results-arrow">→</div>
-      <div class="results-pin" style="background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.55);border:1px solid rgba(255,255,255,0.15);">
-        Long-Term: Zone ${longZone} · ${zLong.name}
-      </div>
-    `;
-  }
+  const steps = nextSteps[stepKey]||nextSteps['same'];
+  const longPin = zLong ? `<div class="results-arrow">→</div><div class="results-pin" style="background:#6b7a9a;">Long-Term: Zone ${longZone} · ${zLong.name}</div>` : '';
 
   el.innerHTML = `
     <div class="results-inner">
       <h2 class="results-title">${title}</h2>
       <p class="results-sub">${sub}</p>
       <div class="results-pins">
-        <div class="results-pin" style="background:${zNow.color};color:#fff;">Zone ${nowZone}: ${zNow.name}</div>
+        <div class="results-pin" style="background:${zNow.color};">Zone ${nowZone}: ${zNow.name}</div>
         <div class="results-arrow">→</div>
-        <div class="results-pin" style="background:${zYear.color};color:#fff;">1 Year: Zone ${yearZone}: ${zYear.name}</div>
-        ${longPinHtml}
+        <div class="results-pin" style="background:${zYear.color};">1 Year: Zone ${yearZone}: ${zYear.name}</div>
+        ${longPin}
       </div>
       <div class="results-divider"></div>
       <p class="results-steps-label">Your Next Steps</p>
-      <div class="results-steps">
-        ${steps.map(s => `<div class="results-step"><span class="results-step-arrow">→</span>${s}</div>`).join('')}
-      </div>
+      <div class="results-steps">${steps.map(s=>`<div class="results-step"><span class="results-step-arrow">→</span>${s}</div>`).join('')}</div>
       <button class="results-reset" onclick="resetAll()">↺ Start Over</button>
     </div>
   `;
 }
 
-function toggleExpand(id) {
-  expandedZone = expandedZone === id ? null : id;
-  renderZones();
-}
+function toggleExpand(id) { expandedZone=expandedZone===id?null:id; renderZones(); }
+function setNow(id) { nowZone=nowZone===id?null:id; renderRoadPins(); renderZones(); renderResults(); }
+function setYear(id) { yearZone=yearZone===id?null:id; renderRoadPins(); renderZones(); renderResults(); }
+function setLong(id) { longZone=longZone===id?null:id; renderRoadPins(); renderZones(); renderResults(); }
+function resetAll() { nowZone=yearZone=longZone=expandedZone=null; renderRoadPins(); renderZones(); renderResults(); }
 
-function setNow(id) {
-  nowZone = nowZone === id ? null : id;
-  renderRoadPins();
-  renderZones();
-  renderResults();
-}
-
-function setYear(id) {
-  yearZone = yearZone === id ? null : id;
-  renderRoadPins();
-  renderZones();
-  renderResults();
-}
-
-function setLong(id) {
-  longZone = longZone === id ? null : id;
-  renderRoadPins();
-  renderZones();
-  renderResults();
-}
-
-function resetAll() {
-  nowZone = null; yearZone = null; longZone = null; expandedZone = null;
-  renderRoadPins();
-  renderZones();
-  renderResults();
-}
-
-// Init
-renderRoadPins();
-renderZones();
-renderResults();
+renderRoadPins(); renderZones(); renderResults();
 </script>
 </body>
 </html>
