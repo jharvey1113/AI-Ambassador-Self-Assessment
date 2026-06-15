@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>O.D.I.N.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+  :root{ --glow:#39f0b0; --gold:#f2c863; --scrim:rgba(8,5,12,.55); --tint:transparent; }
+  *{box-sizing:border-box;}
+  html,body{margin:0;height:100%;background:#050308;}
+  body{font-family:'Share Tech Mono',monospace;color:var(--glow);overflow:hidden;}
+  #stage{position:fixed;inset:0;overflow:hidden;transition:filter 1.3s ease;}
+  #bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.46) saturate(1.15) contrast(1.05);}
+  #poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.46) saturate(1.15);display:none;}
+  #scrim{position:absolute;inset:0;background:radial-gradient(120% 90% at 50% 28%, transparent 0%, var(--scrim) 70%, rgba(5,3,8,.85) 100%);transition:background 1.3s ease;}
+  #tint{position:absolute;inset:0;background:var(--tint);mix-blend-mode:multiply;transition:background 1.3s ease;pointer-events:none;}
+  #scan{position:absolute;inset:0;pointer-events:none;opacity:.5;background:repeating-linear-gradient(to bottom,rgba(127,233,196,.04) 0 1px,transparent 1px 3px);}
+
+  #frame{position:absolute;inset:14px;border:1px solid rgba(202,162,74,.4);pointer-events:none;transition:border-color 1.3s;}
+  .crn{position:absolute;width:24px;height:24px;border:2px solid var(--gold);opacity:.85;transition:border-color 1.3s;}
+  .tl{top:8px;left:8px;border-right:0;border-bottom:0;} .tr{top:8px;right:8px;border-left:0;border-bottom:0;}
+  .bl{bottom:8px;left:8px;border-right:0;border-top:0;} .br{bottom:8px;right:8px;border-left:0;border-top:0;}
+
+  #core{position:absolute;left:50%;top:96px;width:60px;height:60px;margin-left:-30px;border-radius:50%;
+    background:radial-gradient(circle,#dafff2 0%,var(--glow) 58%,transparent 74%);animation:breathe 4s ease-in-out infinite;transition:background 1.3s;}
+  #ring{position:absolute;left:50%;top:62px;width:128px;height:128px;margin-left:-64px;border-radius:50%;border:1px dashed var(--gold);opacity:.5;animation:spin 24s linear infinite;transition:border-color 1.3s;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  @keyframes breathe{0%,100%{box-shadow:0 0 24px 6px var(--glow),0 0 64px 16px var(--glow);}50%{box-shadow:0 0 44px 12px var(--glow),0 0 120px 34px var(--glow);}}
+  #title{position:absolute;top:184px;left:0;right:0;text-align:center;font-family:'Cinzel',serif;font-weight:700;font-size:clamp(34px,7vw,52px);letter-spacing:.18em;color:var(--gold);transition:color 1.3s;text-shadow:0 0 22px rgba(242,200,99,.45),0 0 2px rgba(242,200,99,.9);animation:flick 7s infinite;}
+  @keyframes flick{0%,17%,19%,52%,54%,100%{opacity:1;}18%{opacity:.72;}53%{opacity:.88;}}
+  #tag{position:absolute;top:248px;left:0;right:0;text-align:center;font-size:12px;letter-spacing:.35em;color:var(--glow);opacity:.72;transition:color 1.3s;}
+
+  #watch{position:absolute;top:26px;right:30px;text-align:right;}
+  #watch b{font-family:'Cinzel',serif;font-size:32px;color:var(--glow);text-shadow:0 0 14px var(--glow);transition:color 1.3s;}
+  #watch span{display:block;font-size:10px;letter-spacing:.2em;color:var(--gold);opacity:.7;}
+
+  #grid{position:absolute;left:0;right:0;bottom:78px;top:300px;display:flex;gap:18px;padding:0 40px;align-items:flex-end;justify-content:center;}
+  .panel{flex:1;max-width:300px;background:rgba(8,5,12,.46);border:1px solid rgba(202,162,74,.28);border-radius:6px;padding:14px 16px;backdrop-filter:blur(2px);}
+  .panel h2{margin:0 0 10px;font-size:11px;letter-spacing:.2em;color:var(--gold);font-weight:400;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:7px;}
+  .row{display:flex;justify-content:space-between;gap:10px;font-size:14px;padding:6px 0;color:var(--glow);transition:color 1.3s;}
+  .row .r{opacity:.8;white-space:nowrap;}
+  .row.urgent{color:#fff;animation:pulse 2.2s infinite;}
+  @keyframes pulse{50%{opacity:.55;}}
+  .empty{font-size:13px;opacity:.5;padding:6px 0;}
+
+  #status{position:absolute;left:40px;bottom:44px;font-size:12px;letter-spacing:.15em;color:var(--gold);opacity:.82;transition:color 1.3s;}
+  #ctrl{position:absolute;right:40px;bottom:38px;display:flex;gap:12px;}
+  .btn{background:transparent;border:1px solid var(--gold);color:var(--gold);font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:.15em;padding:9px 18px;border-radius:4px;cursor:pointer;transition:.2s,color 1.3s,border-color 1.3s;}
+  .btn:hover{background:var(--gold);color:#08050c;}
+
+  #stage.alert{--glow:#ff5a4d;--gold:#ffb24a;--tint:rgba(150,18,18,.34);}
+  #stage.alert #bg,#stage.alert #poster{filter:brightness(.4) saturate(1.3) contrast(1.08) hue-rotate(-12deg);}
+
+  @media (max-width:640px){
+    #bg{display:none;} #poster{display:block;}
+    #grid{flex-direction:column;align-items:stretch;top:280px;bottom:120px;padding:0 22px;overflow-y:auto;}
+    .panel{max-width:none;}
+    #ctrl{left:22px;right:22px;justify-content:center;bottom:64px;}
+    #status{left:22px;right:22px;text-align:center;bottom:30px;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    #bg{display:none;} #poster{display:block;}
+    #core,#ring,#title,.row.urgent{animation:none;}
+  }
+</style>
+</head>
+<body>
+<div id="stage">
+  <video id="bg" autoplay muted loop playsinline poster="https://jharvey1113.github.io/AI-Ambassador-Self-Assessment/odin_poster.jpg">
+    <source src="https://jharvey1113.github.io/AI-Ambassador-Self-Assessment/odin_bg.webm" type="video/webm">
+    <source src="https://jharvey1113.github.io/AI-Ambassador-Self-Assessment/odin_bg.mp4" type="video/mp4">
+  </video>
+  <img id="poster" src="https://jharvey1113.github.io/AI-Ambassador-Self-Assessment/odin_poster.jpg" alt="">
+  <div id="scrim"></div>
+  <div id="tint"></div>
+  <div id="scan"></div>
+
+  <div id="ring"></div>
+  <div id="core"></div>
+  <div id="watch"><b id="watchNum">—</b><span>on watch</span></div>
+  <div id="title">O.D.I.N.</div>
+  <div id="tag">OVERSIGHT · DEADLINES · INTEL · NOTICES</div>
+
+  <div id="grid">
+    <div class="panel"><h2>DEADLINES</h2><div id="pDeadlines"></div></div>
+    <div class="panel"><h2>COMMS</h2><div id="pComms"></div></div>
+    <div class="panel"><h2>SCHEDULE</h2><div id="pSchedule"></div></div>
+  </div>
+
+  <div id="status">CONNECTING…</div>
+  <div id="ctrl">
+    <button class="btn" id="calmBtn">STAND DOWN</button>
+    <button class="btn" id="alertBtn">RAISE ALERT</button>
+  </div>
+
+  <div id="frame"></div>
+  <span class="crn tl"></span><span class="crn tr"></span><span class="crn bl"></span><span class="crn br"></span>
+</div>
+
+<script>
+  /* ════════ PASTE YOUR APPS SCRIPT URL HERE ════════
+     After you deploy Code.gs as a Web app, copy its URL (ends in /exec)
+     and paste it between the quotes below, replacing https://script.google.com/macros/s/AKfycbx6r6PX_9oNdbtKpvs09-IEOXzz91BODWeXuSJE_x7KGjvv0BBdjEwelWO7P2uAqQTzag/exec. */
+  const DATA_URL = "https://script.google.com/macros/s/AKfycbx6r6PX_9oNdbtKpvs09-IEOXzz91BODWeXuSJE_x7KGjvv0BBdjEwelWO7P2uAqQTzag/exec";
+
+  const SAMPLE = {
+    watch: 14, state: 'calm', status: 'SYSTEM ONLINE · ALL WATCHES NOMINAL',
+    deadlines: [ { id:'M. Torres', type:'IEP', days:6 }, { id:'D. Vance', type:'MET', days:11 } ],
+    comms: [ { from:'Registrar', subject:'Schedule change request' }, { from:'A. Klein', subject:'Re: accommodations' } ],
+    schedule: [ { title:'IEP meeting', time:'10:30 AM', urgent:true }, { title:'Team check-in', time:'1:00 PM' } ]
+  };
+
+  function fillRows(el, items, render, emptyMsg){
+    if(!items || !items.length){ el.innerHTML = '<div class="empty">'+emptyMsg+'</div>'; return; }
+    el.innerHTML = items.map(render).join('');
+  }
+  function renderData(d){
+    d = d || SAMPLE;
+    document.getElementById('watchNum').textContent = (d.watch != null ? d.watch : '—');
+    document.getElementById('status').textContent = d.status || '';
+    document.getElementById('stage').classList.toggle('alert', d.state === 'alert');
+    fillRows(document.getElementById('pDeadlines'), d.deadlines,
+      x => '<div class="row '+(x.days <= 7 ? 'urgent':'')+'"><span>'+x.type+' · '+(x.id || x.name || '')+'</span><span class="r">'+x.days+'D</span></div>', 'No deadlines in range');
+    fillRows(document.getElementById('pComms'), d.comms,
+      x => '<div class="row"><span>'+x.from+'</span><span class="r">'+(x.subject ? x.subject.slice(0,22) : '')+'</span></div>', 'Inbox clear');
+    fillRows(document.getElementById('pSchedule'), d.schedule,
+      x => '<div class="row '+(x.urgent ? 'urgent':'')+'"><span>'+x.title+'</span><span class="r">'+x.time+'</span></div>', 'Schedule clear');
+  }
+  document.getElementById('alertBtn').onclick = () => document.getElementById('stage').classList.add('alert');
+  document.getElementById('calmBtn').onclick  = () => renderData(window._last || SAMPLE);
+
+  /* ── DATA via JSONP (no CORS errors) ── */
+  window.odinReceive = function(d){ window._last = d; renderData(d); };
+  function loadData(){
+    if (DATA_URL.indexOf('PASTE_') === 0){ renderData(SAMPLE); return; }
+    const s = document.createElement('script');
+    s.src = DATA_URL + '?callback=odinReceive&t=' + Date.now();
+    s.onerror = function(){ document.getElementById('status').textContent = 'DATA LINK UNREACHABLE'; s.remove(); };
+    s.onload  = function(){ s.remove(); };
+    document.body.appendChild(s);
+  }
+  loadData();
+  setInterval(loadData, 300000); // refresh every 5 minutes
+
+  /* ── PLAYBACK NUDGE (insurance; autoplay should work here) ── */
+  (function(){
+    const v = document.getElementById('bg');
+    if(!v) return;
+    v.muted = true; v.playsInline = true;
+    function tryPlay(){ const p = v.play(); if (p && p.catch) p.catch(function(){}); }
+    tryPlay();
+    ['click','touchstart','keydown','pointerdown'].forEach(function(evt){ window.addEventListener(evt, tryPlay); });
+    v.addEventListener('error', function(){ document.getElementById('status').textContent = 'VIDEO FAILED TO LOAD · CHECK URL'; });
+  })();
+</script>
+</body>
+</html>
